@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aminata Diallo · Data Scientist IA</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+/* ── THEMES ── */
+[data-theme="light"] {
+  --bg: #f5f4f0;
+  --bg2: #eceae3;
+  --card: #ffffff;
+  --text: #1a1816;
+  --text2: #3d3a36;
+  --muted: #5c5750;
+  --muted2: #8c8780;
+  --border: #dedad2;
+  --border2: #c8c3b8;
+  --tag-bg: #eceae3;
+  --nav-bg: rgba(245,244,240,0.92);
+  --hero-overlay: rgba(245,244,240,0.82);
+  --stats-bg: #1a1816;
+  --stats-text: #f5f4f0;
+}
+[data-theme="dark"] {
+  --bg: #0f0e0c;
+  --bg2: #181714;
+  --card: #1e1c19;
+  --text: #f0ede8;
+  --text2: #d4cfc8;
+  --muted: #9a9590;
+  --muted2: #6a6560;
+  --border: #2e2b26;
+  --border2: #3e3a34;
+  --tag-bg: #242118;
+  --nav-bg: rgba(15,14,12,0.92);
+  --hero-overlay: rgba(15,14,12,0.78);
+  --stats-bg: #f0ede8;
+  --stats-text: #0f0e0c;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { background:var(--bg); color:var(--text); font-family:"DM Sans",sans-serif; font-size:15px; line-height:1.6; overflow-x:hidden; transition:background .3s,color .3s; }
+
+/* ── NAV ── */
+nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:16px 56px; background:var(--nav-bg); backdrop-filter:blur(16px); border-bottom:1px solid var(--border); }
+.nav-name { font-family:"Cormorant Garamond",serif; font-size:1.1rem; font-weight:600; color:var(--text); }
+.nav-links { display:flex; gap:28px; list-style:none; }
+.nav-links a { font-size:0.78rem; color:var(--muted); text-decoration:none; font-family:"DM Mono",monospace; transition:color .2s; }
+.nav-links a:hover { color:var(--text); }
+.nav-right { display:flex; align-items:center; gap:10px; }
+.lang-toggle { display:flex; gap:5px; }
+.lang-btn { background:none; border:1px solid var(--border2); color:var(--muted); padding:4px 12px; border-radius:20px; cursor:pointer; font-family:"DM Mono",monospace; font-size:0.7rem; transition:all .2s; }
+.lang-btn.active { border-color:var(--text); background:var(--text); color:var(--bg); }
+
+/* THEME TOGGLE */
+.theme-btn { background:none; border:1px solid var(--border2); color:var(--muted); width:32px; height:32px; border-radius:50%; cursor:pointer; font-size:0.85rem; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+.theme-btn:hover { border-color:var(--text); color:var(--text); }
+
+/* ── HERO with background image ── */
+.hero-wrap { position:relative; min-height:100vh; overflow:hidden; }
+.hero-bg { position:absolute; inset:0; background-image:url("https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1600&auto=format&fit=crop"); background-size:cover; background-position:center; }
+.hero-overlay { position:absolute; inset:0; background:var(--hero-overlay); }
+.hero { position:relative; z-index:1; max-width:900px; margin:0 auto; padding:160px 56px 100px; display:flex; flex-direction:column; align-items:flex-start; }
+.hero-eyebrow { font-family:"DM Mono",monospace; font-size:0.72rem; color:var(--muted); margin-bottom:20px; opacity:0; animation:fadeUp .7s .1s ease forwards; }
+.hero h1 { font-family:"Cormorant Garamond",serif; font-size:clamp(3.5rem,7vw,6rem); font-weight:700; line-height:1.04; letter-spacing:-2px; margin-bottom:22px; opacity:0; animation:fadeUp .7s .2s ease forwards; }
+.hero h1 em { font-style:italic; color:var(--muted); font-weight:400; }
+.hero-sub { font-size:1rem; color:var(--muted); line-height:1.75; max-width:540px; margin-bottom:36px; opacity:0; animation:fadeUp .7s .3s ease forwards; }
+.hero-chips { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:36px; opacity:0; animation:fadeUp .7s .4s ease forwards; }
+.chip { font-family:"DM Mono",monospace; font-size:.68rem; padding:4px 12px; border-radius:20px; border:1px solid var(--border2); color:var(--muted); background:var(--card); }
+.hero-cta { display:flex; gap:12px; opacity:0; animation:fadeUp .7s .5s ease forwards; }
+.btn { display:inline-flex; align-items:center; gap:7px; padding:11px 24px; border-radius:8px; font-size:.8rem; font-family:"DM Sans",sans-serif; text-decoration:none; transition:all .2s; cursor:pointer; border:none; font-weight:500; }
+.btn-dark { background:var(--text); color:var(--bg); }
+.btn-dark:hover { transform:translateY(-1px); opacity:.88; }
+.btn-ghost { background:transparent; color:var(--text); border:1px solid var(--border2); }
+.btn-ghost:hover { border-color:var(--text); }
+
+/* ── STATS ── */
+.stats { background:var(--stats-bg); color:var(--stats-text); padding:28px 56px; display:grid; grid-template-columns:repeat(4,1fr); gap:40px; transition:background .3s,color .3s; }
+.stat-n { font-family:"Cormorant Garamond",serif; font-size:2.2rem; font-weight:600; line-height:1; }
+.stat-l { font-family:"DM Mono",monospace; font-size:.66rem; opacity:.45; text-transform:uppercase; letter-spacing:1px; margin-top:3px; }
+
+/* ── SECTIONS ── */
+.section { max-width:1200px; margin:0 auto; padding:96px 56px; }
+.sec-eyebrow { font-family:"DM Mono",monospace; font-size:.67rem; color:var(--muted2); text-transform:uppercase; letter-spacing:2px; margin-bottom:8px; }
+.sec-title { font-family:"Cormorant Garamond",serif; font-size:clamp(2.2rem,3.5vw,3.2rem); font-weight:700; letter-spacing:-1px; margin-bottom:56px; line-height:1.1; color:var(--text); }
+.sec-title em { font-style:italic; font-weight:400; color:var(--muted); }
+hr.div { border:none; border-top:1px solid var(--border); }
+
+/* ── ABOUT with background ── */
+.about-wrap { position:relative; overflow:hidden; background:var(--bg2); }
+.about-bg { position:absolute; inset:0; background-image:url("https://images.unsplash.com/photo-1518770660439-4636190af475?w=1200&auto=format&fit=crop&q=40"); background-size:cover; background-position:center; opacity:.05; }
+.about-grid { position:relative; z-index:1; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start; }
+.about-text { font-size:.95rem; color:var(--muted); line-height:1.8; }
+.about-text p { margin-bottom:14px; }
+.about-text strong { color:var(--text); font-weight:500; }
+.skills-stack { display:flex; flex-direction:column; gap:18px; }
+.sk-row { display:flex; flex-direction:column; gap:7px; }
+.sk-head { display:flex; align-items:center; gap:10px; }
+.sk-ico { width:30px; height:30px; background:var(--card); border:1px solid var(--border); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:.8rem; }
+.sk-name { font-size:.85rem; font-weight:500; color:var(--text); }
+.sk-pills { display:flex; flex-wrap:wrap; gap:5px; padding-left:40px; }
+.pill { font-family:"DM Mono",monospace; font-size:.64rem; padding:3px 9px; background:var(--tag-bg); border:1px solid var(--border); border-radius:20px; color:var(--muted); }
+
+/* ── PROJECTS ── */
+.projects-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+.proj { background:var(--card); border:1px solid var(--border); border-radius:16px; overflow:hidden; transition:all .25s; display:flex; flex-direction:column; }
+.proj:hover { border-color:var(--border2); transform:translateY(-3px); box-shadow:0 10px 36px rgba(0,0,0,.08); }
+.proj-banner { width:100%; height:160px; object-fit:cover; display:block; }
+.proj-body { padding:22px 24px; display:flex; flex-direction:column; gap:12px; flex:1; }
+.proj-top { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+.proj-title { font-family:"Cormorant Garamond",serif; font-size:1.05rem; font-weight:600; line-height:1.3; color:var(--text); }
+.proj-status { font-family:"DM Mono",monospace; font-size:.6rem; padding:3px 9px; border-radius:20px; white-space:nowrap; }
+.s-done { background:#f0fdf4; color:#166534; border:1px solid #bbf7d0; }
+.s-wip { background:#fff7ed; color:#9a3412; border:1px solid #fed7aa; }
+[data-theme="dark"] .s-done { background:#052e16; color:#4ade80; border-color:#166534; }
+[data-theme="dark"] .s-wip { background:#431407; color:#fb923c; border-color:#9a3412; }
+.proj-desc { font-size:.8rem; color:var(--muted); line-height:1.6; flex:1; }
+.proj-metrics { display:flex; gap:16px; padding:10px 0; border-top:1px solid var(--border); }
+.m-val { font-family:"DM Mono",monospace; font-size:.82rem; font-weight:500; color:var(--text2); }
+.m-key { font-family:"DM Mono",monospace; font-size:.6rem; color:var(--muted2); margin-top:1px; }
+.proj-pills { display:flex; flex-wrap:wrap; gap:5px; }
+.proj-link { display:inline-flex; align-items:center; gap:5px; font-family:"DM Mono",monospace; font-size:.66rem; color:var(--muted); text-decoration:none; padding-bottom:2px; border-bottom:1px solid var(--border); transition:all .2s; align-self:flex-start; margin-top:4px; }
+.proj-link:hover { color:var(--text); border-color:var(--text); }
+
+/* ── EDUCATION ── */
+.edu-grid { display:grid; grid-template-columns:1fr 1fr; gap:56px; }
+.edu-col-title { font-family:"DM Mono",monospace; font-size:.66rem; color:var(--muted2); text-transform:uppercase; letter-spacing:1.5px; margin-bottom:28px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+.tl-item { display:flex; gap:18px; padding-bottom:28px; position:relative; }
+.tl-item::after { content:""; position:absolute; left:14px; top:32px; bottom:0; width:1px; background:var(--border); }
+.tl-item:last-child::after { display:none; }
+.tl-dot { width:30px; height:30px; min-width:30px; background:var(--card); border:1px solid var(--border2); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:.8rem; margin-top:2px; }
+.tl-date { font-family:"DM Mono",monospace; font-size:.64rem; color:var(--muted2); margin-bottom:2px; }
+.tl-title { font-size:.88rem; font-weight:500; color:var(--text); margin-bottom:2px; }
+.tl-org { font-size:.78rem; color:#1e3a5f; margin-bottom:4px; }
+[data-theme="dark"] .tl-org { color:#93bbf0; }
+.tl-desc { font-size:.76rem; color:var(--muted); line-height:1.5; }
+
+/* ── CONTACT with background ── */
+.contact-wrap-bg { position:relative; overflow:hidden; }
+.contact-bg-img { position:absolute; inset:0; background-image:url("https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&auto=format&fit=crop&q=40"); background-size:cover; background-position:center; opacity:.04; }
+.contact-grid { position:relative; z-index:1; display:grid; grid-template-columns:1fr; gap:64px; align-items:start; max-width:640px; }
+.contact-h { font-family:"Cormorant Garamond",serif; font-size:clamp(2.2rem,4vw,3.4rem); font-weight:700; line-height:1.12; letter-spacing:-1px; margin-bottom:18px; color:var(--text); }
+.contact-h em { font-style:italic; font-weight:400; color:var(--muted); }
+.contact-sub { font-size:.88rem; color:var(--muted); line-height:1.7; margin-bottom:32px; }
+.contact-links { display:flex; flex-direction:column; gap:10px; }
+.c-row { display:flex; align-items:center; gap:14px; padding:13px 16px; background:var(--card); border:1px solid var(--border); border-radius:10px; text-decoration:none; transition:all .2s; }
+.c-row:hover { border-color:var(--border2); transform:translateX(4px); }
+.c-ico { width:34px; height:34px; background:var(--bg2); border:1px solid var(--border); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:.82rem; }
+.c-key { font-family:"DM Mono",monospace; font-size:.6rem; color:var(--muted2); }
+.c-val { font-size:.83rem; color:var(--text); }
+.cv-card { background:var(--text); color:var(--bg); border-radius:18px; padding:36px; text-align:center; }
+.cv-emoji { font-size:2rem; display:block; margin-bottom:12px; }
+.cv-title { font-family:"Cormorant Garamond",serif; font-size:1.4rem; font-weight:600; margin-bottom:10px; }
+.cv-sub { font-size:.78rem; opacity:.55; line-height:1.6; margin-bottom:22px; }
+.btn-inv { display:inline-flex; align-items:center; gap:7px; background:var(--bg); color:var(--text); padding:10px 22px; border-radius:7px; font-size:.8rem; text-decoration:none; font-weight:500; transition:all .2s; }
+.btn-inv:hover { opacity:.88; }
+.cv-langs { margin-top:18px; padding-top:18px; border-top:1px solid rgba(128,128,128,.2); display:flex; justify-content:center; gap:8px; }
+.cv-lang { font-family:"DM Mono",monospace; font-size:.65rem; opacity:.45; background:rgba(128,128,128,.1); border:1px solid rgba(128,128,128,.15); padding:3px 10px; border-radius:20px; }
+
+
+/* QUALITIES */
+.qualities-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.q-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:24px; transition:all .25s; }
+.q-card:hover { border-color:var(--border2); transform:translateY(-2px); box-shadow:0 6px 24px rgba(0,0,0,.06); }
+.q-icon { font-size:1.4rem; margin-bottom:10px; }
+.q-title { font-family:"Cormorant Garamond",serif; font-size:1.05rem; font-weight:600; color:var(--text); margin-bottom:8px; }
+.q-desc { font-size:.8rem; color:var(--muted); line-height:1.65; }
+@media(max-width:900px){ .qualities-grid{ grid-template-columns:1fr 1fr; } }
+@media(max-width:600px){ .qualities-grid{ grid-template-columns:1fr; } }
+
+footer { border-top:1px solid var(--border); padding:24px 56px; display:flex; justify-content:space-between; align-items:center; }
+.foot-l { font-family:"DM Mono",monospace; font-size:.68rem; color:var(--muted2); }
+.foot-r { display:flex; gap:18px; }
+.foot-a { font-family:"DM Mono",monospace; font-size:.68rem; color:var(--muted2); text-decoration:none; transition:color .2s; }
+.foot-a:hover { color:var(--text); }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+.reveal { opacity:0; transform:translateY(22px); transition:opacity .6s ease,transform .6s ease; }
+.reveal.visible { opacity:1; transform:translateY(0); }
+
+@media(max-width:900px){
+  nav{padding:14px 20px;}
+  .nav-links{display:none;}
+  .hero{padding:110px 20px 70px;}
+  .stats{grid-template-columns:repeat(2,1fr);padding:24px 20px;gap:20px;}
+  .section{padding:60px 20px;}
+  .about-grid,.edu-grid,.contact-grid{grid-template-columns:1fr;gap:40px;}
+  .projects-grid{grid-template-columns:1fr;}
+  footer{flex-direction:column;gap:12px;padding:20px;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-name">Aminata Diallo</div>
+  <ul class="nav-links">
+    <li><a href="#about" data-fr="À propos" data-en="About">À propos</a></li>
+    <li><a href="#projects" data-fr="Projets" data-en="Projects">Projets</a></li>
+    <li><a href="#qualities" data-fr="Qualités" data-en="Qualities">Qualités</a></li>
+    <li><a href="#education" data-fr="Parcours" data-en="Background">Parcours</a></li>
+    <li><a href="#contact" data-fr="Contact" data-en="Contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('fr')">FR</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+    <button class="theme-btn" onclick="toggleTheme()" id="themeBtn" title="Changer le thème">🌙</button>
+  </div>
+</nav>
+
+<!-- HERO with background -->
+<div class="hero-wrap">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero">
+    <div class="hero-name-title" style="font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--muted);margin-bottom:8px;opacity:0;animation:fadeUp .7s .05s ease forwards;" data-fr="Aminata DIALLO" data-en="Aminata DIALLO">Aminata DIALLO</div>
+    <div class="hero-eyebrow" data-fr="Master 1 · Paris 8 · Stage disponible maintenant · Alternance sept. 2026" data-en="Master 1 · Paris 8 · Internship available now · Apprenticeship Sept. 2026">Master 1 · Paris 8 · Stage disponible maintenant · Alternance sept. 2026</div>
+    <h1>Data Scientist <em>& IA</em></h1>
+    <p class="hero-sub" data-fr="Passionnée par la valorisation des données, je construis des systèmes IA agentiques, des modèles prédictifs et explore la sécurité formelle des protocoles cryptographiques." data-en="Passionate about data, I build agentic AI systems, predictive models and explore formal security of cryptographic protocols.">Passionnée par la valorisation des données, je construis des systèmes IA agentiques, des modèles prédictifs et explore la sécurité formelle des protocoles cryptographiques.</p>
+    <div class="hero-chips">
+      <span class="chip">Python</span><span class="chip">XGBoost</span><span class="chip">LangGraph</span><span class="chip">ArcFace</span><span class="chip">AES-GCM</span><span class="chip">Elasticsearch</span>
+    </div>
+    <div class="hero-cta">
+      <a href="https://github.com/aminatadiallo1" target="_blank" class="btn btn-dark" data-fr="Voir GitHub" data-en="View GitHub">Voir GitHub</a>
+      <a href="#contact" class="btn btn-ghost" data-fr="Me contacter" data-en="Get in touch">Me contacter</a>
+    </div>
+  </div>
+</div>
+
+<div class="stats">
+  <div><div class="stat-n">8</div><div class="stat-l" data-fr="Projets" data-en="Projects">Projets</div></div>
+  <div><div class="stat-n">0.9876</div><div class="stat-l">R² XGBoost</div></div>
+  <div><div class="stat-n">1.10%</div><div class="stat-l">EER ArcFace</div></div>
+  <div><div class="stat-n">3</div><div class="stat-l" data-fr="Domaines" data-en="Domains">Domaines</div></div>
+</div>
+
+<hr class="div">
+
+<!-- ABOUT with subtle background -->
+<div class="about-wrap">
+  <div class="about-bg"></div>
+  <section class="section" id="about">
+    <div class="sec-eyebrow" data-fr="À propos" data-en="About">À propos</div>
+    <h2 class="sec-title reveal" data-fr="Profil & <em>compétences</em>" data-en="Profile & <em>skills</em>">Profil & <em>compétences</em></h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p data-fr="Actuellement en <strong>Master 1 Cybersécurité et Science des Données</strong> à l'Université Paris 8, je développe une spécialisation en Data Science, IA générative et exploitation de données massives." data-en="Currently in <strong>Master 1 Cybersecurity & Data Science</strong> at Université Paris 8, developing expertise in Data Science, generative AI and large-scale data.">Actuellement en <strong>Master 1 Cybersécurité et Science des Données</strong> à l'Université Paris 8, je développe une spécialisation en Data Science, IA générative et exploitation de données massives.</p>
+        <p data-fr="Passionnée par l'analyse et la valorisation des données, j'aime transformer des problématiques complexes en solutions structurées. Je m'intéresse particulièrement aux <strong>architectures multi-agents</strong>, aux <strong>modèles de langage</strong> et à l'automatisation de la visualisation." data-en="Passionate about data analysis, I love transforming complex problems into structured solutions. Particularly interested in <strong>multi-agent architectures</strong>, <strong>language models</strong> and visualization automation.">Passionnée par l'analyse et la valorisation des données, j'aime transformer des problématiques complexes en solutions structurées. Je m'intéresse particulièrement aux <strong>architectures multi-agents</strong>, aux <strong>modèles de langage</strong> et à l'automatisation de la visualisation.</p>
+        <p data-fr="Je suis disponible <strong>immédiatement pour un stage</strong> et recherche une <strong>alternance de 12 mois</strong> à partir de septembre 2026, rythme 3j entreprise / 2j université." data-en="I am available <strong>immediately for an internship</strong> and seeking a <strong>12-month apprenticeship</strong> from September 2026, 3 days company / 2 days university.">Je suis disponible <strong>immédiatement pour un stage</strong> et recherche une <strong>alternance de 12 mois</strong> à partir de septembre 2026, rythme 3j entreprise / 2j université.</p>
+      </div>
+      <div class="skills-stack reveal">
+        <div class="sk-row"><div class="sk-head"><div class="sk-ico">🤖</div><div class="sk-name" data-fr="IA Générative & Agents" data-en="Generative AI & Agents">IA Générative & Agents</div></div><div class="sk-pills"><span class="pill">LangChain</span><span class="pill">LangGraph</span><span class="pill">FastMCP</span><span class="pill">RAG</span><span class="pill">OpenAI</span></div></div>
+        <div class="sk-row"><div class="sk-head"><div class="sk-ico">📊</div><div class="sk-name">Machine Learning</div></div><div class="sk-pills"><span class="pill">XGBoost</span><span class="pill">RandomForest</span><span class="pill">Scikit-learn</span><span class="pill">Pandas</span><span class="pill">SAS</span></div></div>
+        <div class="sk-row"><div class="sk-head"><div class="sk-ico">👁️</div><div class="sk-name">Deep Learning</div></div><div class="sk-pills"><span class="pill">PyTorch</span><span class="pill">FaceNet</span><span class="pill">ArcFace</span><span class="pill">LFW</span></div></div>
+        <div class="sk-row"><div class="sk-head"><div class="sk-ico">🔐</div><div class="sk-name" data-fr="Cybersécurité" data-en="Cybersecurity">Cybersécurité</div></div><div class="sk-pills"><span class="pill">AES-GCM</span><span class="pill">Cryptographie</span><span class="pill">Preuves formelles</span><span class="pill">Ransomware</span></div></div>
+        <div class="sk-row"><div class="sk-head"><div class="sk-ico">🗄️</div><div class="sk-name" data-fr="Bases de données" data-en="Databases">Bases de données</div></div><div class="sk-pills"><span class="pill">Elasticsearch</span><span class="pill">MongoDB</span><span class="pill">Oracle</span><span class="pill">Cassandra</span></div></div>
+        <div class="sk-row"><div class="sk-head"><div class="sk-ico">📈</div><div class="sk-name" data-fr="Visualisation" data-en="Visualization">Visualisation</div></div><div class="sk-pills"><span class="pill">Streamlit</span><span class="pill">Plotly</span><span class="pill">Power BI</span><span class="pill">Kibana</span></div></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<hr class="div">
+
+<section class="section" id="projects">
+  <div class="sec-eyebrow" data-fr="Projets" data-en="Projects">Projets</div>
+  <h2 class="sec-title reveal" data-fr="Ce que j'ai <em>construit</em>" data-en="What I've <em>built</em>">Ce que j'ai <em>construit</em></h2>
+  <div class="projects-grid">
+
+    <div class="proj reveal">
+      <img class="proj-banner" src="https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&h=160&fit=crop&auto=format" alt="AI">
+      <div class="proj-body">
+        <div class="proj-top"><div class="proj-title" data-fr="Assistant IA Multi-Agent" data-en="Multi-Agent AI Assistant">Assistant IA Multi-Agent</div><span class="proj-status s-done" data-fr="Terminé" data-en="Done">Terminé</span></div>
+        <div class="proj-desc" data-fr="5 agents spécialisés coordonnés par un LLM orchestrateur. Interrogation de données énergétiques en langage naturel via MCP, génération automatique de visualisations, RAG documentaire sur rapports RTE/ADEME." data-en="5 specialized agents coordinated by an LLM orchestrator. Natural language energy data queries via MCP, automatic chart generation, document RAG on RTE/ADEME reports.">5 agents spécialisés coordonnés par un LLM orchestrateur. Interrogation de données énergétiques en langage naturel via MCP, génération automatique de visualisations, RAG documentaire sur rapports RTE/ADEME.</div>
+        <div class="proj-pills"><span class="pill">LangGraph</span><span class="pill">FastMCP</span><span class="pill">RAG</span><span class="pill">Chroma</span><span class="pill">Streamlit</span></div>
+        <a href="https://github.com/aminatadiallo1/assistant-edf" target="_blank" class="proj-link">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="proj reveal">
+      <img class="proj-banner" src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=160&fit=crop&auto=format" alt="Data">
+      <div class="proj-body">
+        <div class="proj-top"><div class="proj-title" data-fr="Prédiction Consommation Électrique" data-en="Electricity Consumption Forecast">Prédiction Consommation Électrique</div><span class="proj-status s-done" data-fr="Terminé" data-en="Done">Terminé</span></div>
+        <div class="proj-desc" data-fr="Prédiction horaire à 72h. Données RTE, 30 features (lags, sin/cos, thermosensibilité), split temporel strict, dashboard Streamlit interactif." data-en="72h hourly forecast. RTE data, 30 features, strict temporal split, interactive Streamlit dashboard.">Prédiction horaire à 72h. Données RTE, 30 features (lags, sin/cos, thermosensibilité), split temporel strict, dashboard Streamlit interactif.</div>
+        <div class="proj-metrics"><div><div class="m-val">0.9876</div><div class="m-key">R²</div></div><div><div class="m-val">0.898 GW</div><div class="m-key">MAE</div></div><div><div class="m-val">2.44%</div><div class="m-key">MAPE</div></div></div>
+        <div class="proj-pills"><span class="pill">XGBoost</span><span class="pill">RandomForest</span><span class="pill">Plotly</span><span class="pill">Streamlit</span></div>
+        <a href="https://github.com/aminatadiallo1/prediction_conso_electrique" target="_blank" class="proj-link">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="proj reveal">
+      <img class="proj-banner" src="https://images.unsplash.com/photo-1555255707-c07966088b7b?w=600&h=160&fit=crop&auto=format" alt="Face">
+      <div class="proj-body">
+        <div class="proj-top"><div class="proj-title" data-fr="Reconnaissance Faciale · FaceNet vs ArcFace" data-en="Face Recognition · FaceNet vs ArcFace">Reconnaissance Faciale · FaceNet vs ArcFace</div><span class="proj-status s-done" data-fr="Terminé" data-en="Done">Terminé</span></div>
+        <div class="proj-desc" data-fr="Comparaison sur LFW (1000 paires). ArcFace atteint un EER de 1.10% vs 2.00% pour FaceNet. Interface Streamlit de vérification d'identité en temps réel." data-en="Comparison on LFW (1000 pairs). ArcFace reaches 1.10% EER vs 2.00% for FaceNet. Real-time Streamlit identity verification.">Comparaison sur LFW (1000 paires). ArcFace atteint un EER de 1.10% vs 2.00% pour FaceNet. Interface Streamlit de vérification d'identité en temps réel.</div>
+        <div class="proj-metrics"><div><div class="m-val">0.9976</div><div class="m-key">AUC ArcFace</div></div><div><div class="m-val">1.10%</div><div class="m-key">EER ArcFace</div></div></div>
+        <div class="proj-pills"><span class="pill">FaceNet</span><span class="pill">ArcFace</span><span class="pill">PyTorch</span><span class="pill">LFW</span></div>
+        <a href="https://github.com/aminatadiallo1/reconnaissance-faciale" target="_blank" class="proj-link">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="proj reveal">
+      <img class="proj-banner" src="https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=600&h=160&fit=crop&auto=format" alt="Cybersecurity">
+      <div class="proj-body">
+        <div class="proj-top"><div class="proj-title" data-fr="Preuves Formelles · AES-GCM" data-en="Formal Proofs · AES-GCM">Preuves Formelles · AES-GCM</div><span class="proj-status s-done" data-fr="Terminé" data-en="Done">Terminé</span></div>
+        <div class="proj-desc" data-fr="Formalisation des propriétés IND-CPA et INT-CTXT d'un schéma AEAD. Preuve du théorème AE = IND-CPA + INT-CTXT et analyse de la réutilisation de nonce." data-en="Formalization of IND-CPA and INT-CTXT properties of an AEAD scheme. Proof of AE = IND-CPA + INT-CTXT theorem and nonce reuse analysis.">Formalisation des propriétés IND-CPA et INT-CTXT d'un schéma AEAD. Preuve du théorème AE = IND-CPA + INT-CTXT et analyse de la réutilisation de nonce.</div>
+        <div class="proj-pills"><span class="pill">Cryptographie</span><span class="pill">AES-GCM</span><span class="pill">Preuves formelles</span></div>
+        <a href="https://github.com/aminatadiallo1/preuves-formelles-aes-gcm" target="_blank" class="proj-link">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="proj reveal">
+      <img class="proj-banner" src="https://images.unsplash.com/photo-1614064641938-3bbee52942c7?w=600&h=160&fit=crop&auto=format" alt="Ransomware">
+      <div class="proj-body">
+        <div class="proj-top"><div class="proj-title" data-fr="Attaque Ransomware" data-en="Ransomware Attack">Attaque Ransomware</div><span class="proj-status s-done" data-fr="Terminé" data-en="Done">Terminé</span></div>
+        <div class="proj-desc" data-fr="Analyse des mécanismes d'une attaque ransomware : chiffrement hybride AES+RSA, propagation réseau SMB, suppression des sauvegardes et contre-mesures de défense." data-en="Analysis of ransomware mechanisms: AES+RSA hybrid encryption, SMB propagation, backup deletion and countermeasures.">Analyse des mécanismes d'une attaque ransomware : chiffrement hybride AES+RSA, propagation réseau SMB, suppression des sauvegardes et contre-mesures de défense.</div>
+        <div class="proj-pills"><span class="pill">Cybersécurité</span><span class="pill">Python</span><span class="pill">MITRE ATT&CK</span></div>
+        <a href="https://github.com/aminatadiallo1/attaque-ransomware" target="_blank" class="proj-link">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="proj reveal">
+      <img class="proj-banner" src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=160&fit=crop&auto=format" alt="Analytics">
+      <div class="proj-body">
+        <div class="proj-top"><div class="proj-title" data-fr="Elasticsearch & Kibana" data-en="Elasticsearch & Kibana">Elasticsearch & Kibana</div><span class="proj-status s-done" data-fr="Terminé" data-en="Done">Terminé</span></div>
+        <div class="proj-desc" data-fr="Indexation de données massives, requêtage DSL avancé et construction de dashboards interactifs pour l'analyse exploratoire en temps réel." data-en="Massive data indexing, advanced DSL querying and interactive dashboards for real-time analysis.">Indexation de données massives, requêtage DSL avancé et construction de dashboards interactifs pour l'analyse exploratoire en temps réel.</div>
+        <div class="proj-pills"><span class="pill">Elasticsearch</span><span class="pill">Kibana</span><span class="pill">ELK Stack</span></div>
+        <a href="https://github.com/aminatadiallo1/elasticsearch-kibana" target="_blank" class="proj-link">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="proj reveal">
+      <img class="proj-banner" src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&h=160&fit=crop&auto=format" alt="Real Estate">
+      <div class="proj-body">
+        <div class="proj-top"><div class="proj-title" data-fr="Prédiction Prix Logements · Taipei" data-en="Housing Prices · Taipei">Prédiction Prix Logements · Taipei</div><span class="proj-status s-done" data-fr="Terminé" data-en="Done">Terminé</span></div>
+        <div class="proj-desc" data-fr="Analyse statistique exploratoire et modélisation par régression linéaire sur données immobilières à Taipei. Nettoyage, visualisation, évaluation des performances." data-en="Exploratory statistical analysis and linear regression on Taipei real estate data. Cleaning, visualization, performance evaluation.">Analyse statistique exploratoire et modélisation par régression linéaire sur données immobilières à Taipei. Nettoyage, visualisation, évaluation des performances.</div>
+        <div class="proj-pills"><span class="pill">SAS</span><span class="pill">R</span><span class="pill">Régression</span></div>
+        <a href="https://github.com/aminatadiallo1/projet-sas" target="_blank" class="proj-link">GitHub →</a>
+      </div>
+    </div>
+
+    <div class="proj reveal">
+      <img class="proj-banner" src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=160&fit=crop&auto=format" alt="IoT">
+      <div class="proj-body">
+        <div class="proj-top"><div class="proj-title">Internet of Things</div><span class="proj-status s-done" data-fr="Terminé" data-en="Done">Terminé</span></div>
+        <div class="proj-desc" data-fr="Architectures IoT, protocoles MQTT/LoRaWAN/Zigbee, enjeux de sécurité et cas d'usage dans les systèmes embarqués et connectés." data-en="IoT architectures, MQTT/LoRaWAN/Zigbee protocols, security challenges and use cases in embedded systems.">Architectures IoT, protocoles MQTT/LoRaWAN/Zigbee, enjeux de sécurité et cas d'usage dans les systèmes embarqués et connectés.</div>
+        <div class="proj-pills"><span class="pill">IoT</span><span class="pill">MQTT</span><span class="pill">LoRaWAN</span><span class="pill">Sécurité</span></div>
+        <a href="https://github.com/aminatadiallo1/internet-of-things" target="_blank" class="proj-link">GitHub →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<hr class="div">
+
+<section class="section" id="qualities">
+  <div class="sec-eyebrow" data-fr="Savoir-être" data-en="Soft skills">Savoir-être</div>
+  <h2 class="sec-title reveal" data-fr="Mes <em>qualités</em>" data-en="My <em>qualities</em>">Mes <em>qualités</em></h2>
+  <div class="qualities-grid reveal">
+
+    <div class="q-card">
+      <div class="q-icon">🔍</div>
+      <div class="q-title" data-fr="Curiosité" data-en="Curiosity">Curiosité</div>
+      <div class="q-desc" data-fr="J'explore activement les nouvelles technologies · IA agentique, MCP, LLM · et je me forme en continu pour rester à la pointe des avancées." data-en="I actively explore new technologies · agentic AI, MCP, LLM · and continuously learn to stay at the forefront of advances.">J'explore activement les nouvelles technologies · IA agentique, MCP, LLM · et je me forme en continu pour rester à la pointe des avancées.</div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-icon">⚙️</div>
+      <div class="q-title" data-fr="Rigueur" data-en="Rigor">Rigueur</div>
+      <div class="q-desc" data-fr="Je travaille avec méthode et précision, que ce soit dans la modélisation ML, les preuves formelles ou la structuration d'un pipeline de données." data-en="I work with method and precision, whether in ML modeling, formal proofs or structuring a data pipeline.">Je travaille avec méthode et précision, que ce soit dans la modélisation ML, les preuves formelles ou la structuration d'un pipeline de données.</div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-icon">💡</div>
+      <div class="q-title" data-fr="Autonomie" data-en="Autonomy">Autonomie</div>
+      <div class="q-desc" data-fr="Capable de mener des projets de bout en bout · de la collecte des données jusqu'au déploiement · en prenant des initiatives et en cherchant des solutions de manière indépendante." data-en="Able to lead projects end-to-end · from data collection to deployment · taking initiative and finding solutions independently.">Capable de mener des projets de bout en bout · de la collecte des données jusqu'au déploiement · en prenant des initiatives et en cherchant des solutions de manière indépendante.</div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-icon">🤝</div>
+      <div class="q-title" data-fr="Esprit d'équipe" data-en="Team spirit">Esprit d'équipe</div>
+      <div class="q-desc" data-fr="J'aime collaborer, partager mes connaissances et contribuer à une dynamique collective. Mes expériences professionnelles m'ont appris l'importance du travail en équipe." data-en="I enjoy collaborating, sharing knowledge and contributing to team dynamics. My work experience taught me the importance of teamwork.">J'aime collaborer, partager mes connaissances et contribuer à une dynamique collective. Mes expériences professionnelles m'ont appris l'importance du travail en équipe.</div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-icon">🧩</div>
+      <div class="q-title" data-fr="Esprit analytique" data-en="Analytical mindset">Esprit analytique</div>
+      <div class="q-desc" data-fr="Je décompose les problèmes complexes en sous-problèmes structurés, ce qui me permet d'identifier les bonnes solutions et d'anticiper les risques." data-en="I break down complex problems into structured sub-problems, allowing me to identify the right solutions and anticipate risks.">Je décompose les problèmes complexes en sous-problèmes structurés, ce qui me permet d'identifier les bonnes solutions et d'anticiper les risques.</div>
+    </div>
+
+    <div class="q-card">
+      <div class="q-icon">📐</div>
+      <div class="q-title" data-fr="Organisation" data-en="Organization">Organisation</div>
+      <div class="q-desc" data-fr="Je structure mon travail efficacement · versioning Git, documentation claire, pipelines reproductibles · pour livrer des résultats fiables et maintenables." data-en="I structure my work efficiently · Git versioning, clear documentation, reproducible pipelines · to deliver reliable and maintainable results.">Je structure mon travail efficacement · versioning Git, documentation claire, pipelines reproductibles · pour livrer des résultats fiables et maintenables.</div>
+    </div>
+
+  </div>
+</section>
+
+<hr class="div">
+
+<section class="section" id="education">
+  <div class="sec-eyebrow" data-fr="Parcours" data-en="Background">Parcours</div>
+  <h2 class="sec-title reveal" data-fr="Formation & <em>expérience</em>" data-en="Education & <em>experience</em>">Formation & <em>expérience</em></h2>
+  <div class="edu-grid">
+    <div>
+      <div class="edu-col-title" data-fr="Formation" data-en="Education">Formation</div>
+      <div class="tl-item reveal"><div class="tl-dot">🎓</div><div><div class="tl-date">2025 · 2026</div><div class="tl-title" data-fr="Master 1 · Cybersécurité & Science des Données" data-en="Master 1 · Cybersecurity & Data Science">Master 1 · Cybersécurité & Science des Données</div><div class="tl-org">Université Paris 8</div><div class="tl-desc" data-fr="IA générative · Preuves formelles · ML · Deep Learning · Bases distribuées" data-en="Generative AI · Formal proofs · ML · Deep Learning · Distributed databases">IA générative · Preuves formelles · ML · Deep Learning · Bases distribuées</div></div></div>
+      <div class="tl-item reveal"><div class="tl-dot">📐</div><div><div class="tl-date">2023 · 2024</div><div class="tl-title" data-fr="Licence 3 · Mathématiques & Statistiques" data-en="Bachelor · Mathematics & Statistics">Licence 3 · Mathématiques & Statistiques</div><div class="tl-org">Université Paris Cité</div><div class="tl-desc" data-fr="Option Statistiques · Analyse · Probabilités · Modélisation" data-en="Statistics track · Analysis · Probability · Modeling">Option Statistiques · Analyse · Probabilités · Modélisation</div></div></div>
+      <div class="tl-item reveal"><div class="tl-dot">🔬</div><div><div class="tl-date">2021 · 2023</div><div class="tl-title" data-fr="Licence 1 & 2 · Sciences pour l'Ingénieur" data-en="Bachelor 1 & 2 · Engineering Sciences">Licence 1 & 2 · Sciences pour l'Ingénieur</div><div class="tl-org">Université Paris Est Créteil (UPEC)</div><div class="tl-desc" data-fr="Mathématiques · Physique · Informatique · Sciences de l'ingénieur" data-en="Mathematics · Physics · Computer Science · Engineering sciences">Mathématiques · Physique · Informatique · Sciences de l'ingénieur</div></div></div>
+    </div>
+    <div>
+      <div class="edu-col-title" data-fr="Recherche" data-en="Seeking">Recherche</div>
+      <div class="tl-item reveal"><div class="tl-dot">🔍</div><div><div class="tl-date" data-fr="Maintenant & Sept. 2026" data-en="Now & Sept. 2026">Maintenant & Sept. 2026</div><div class="tl-title" data-fr="Stage (maintenant) & Alternance (sept. 2026)" data-en="Internship (now) & Apprenticeship (Sept. 2026)">Stage (maintenant) & Alternance (sept. 2026)</div><div class="tl-org" data-fr="Île-de-France · 12 mois · 3j/2j" data-en="Île-de-France · 12 months · 3d/2d">Île-de-France · 12 mois · 3j/2j</div><div class="tl-desc" data-fr="IA générative · IA agentique · MCP · LLM · Data Science" data-en="Generative AI · Agentic AI · MCP · LLM · Data Science">IA générative · IA agentique · MCP · LLM · Data Science</div></div></div>
+      <div class="tl-item reveal"><div class="tl-dot">💼</div><div><div class="tl-date">2022 · 2023</div><div class="tl-title" data-fr="Expériences professionnelles" data-en="Work experience">Expériences professionnelles</div><div class="tl-org">SAMSIC · Carrefour · Hippopotamus</div><div class="tl-desc" data-fr="Rigueur · Organisation · Esprit d'équipe" data-en="Rigor · Organization · Teamwork">Rigueur · Organisation · Esprit d'équipe</div></div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="div">
+
+<div class="contact-wrap-bg">
+  <div class="contact-bg-img"></div>
+  <section class="section" id="contact">
+    <div class="sec-eyebrow">Contact</div>
+    <div class="contact-grid">
+      <div class="reveal">
+        <h2 class="contact-h" data-fr="Travaillons<br><em>ensemble.</em>" data-en="Let's work<br><em>together.</em>">Travaillons<br><em>ensemble.</em></h2>
+        <p class="contact-sub" data-fr="Disponible immédiatement pour un stage et pour une alternance de 12 mois à partir de septembre 2026. Ouverte à tout projet autour de l'IA, du Machine Learning ou de la cybersécurité." data-en="Available immediately for an internship and for a 12-month apprenticeship from September 2026. Open to any AI, Machine Learning or cybersecurity project.">Disponible immédiatement pour un stage et pour une alternance de 12 mois à partir de septembre 2026. Ouverte à tout projet autour de l'IA, du Machine Learning ou de la cybersécurité.</p>
+        <div class="contact-links">
+          <a href="mailto:aminatadiallopro10@gmail.com" class="c-row"><div class="c-ico">✉</div><div><div class="c-key">Email</div><div class="c-val">aminatadiallopro10@gmail.com</div></div></a>
+          <a href="https://github.com/aminatadiallo1" target="_blank" class="c-row"><div class="c-ico">⬡</div><div><div class="c-key">GitHub</div><div class="c-val">aminatadiallo1</div></div></a>
+          <a href="tel:+33745072089" class="c-row"><div class="c-ico">☎</div><div><div class="c-key" data-fr="Téléphone" data-en="Phone">Téléphone</div><div class="c-val">07 45 07 20 89</div></div></a>
+          <div class="c-row"><div class="c-ico">📍</div><div><div class="c-key" data-fr="Localisation" data-en="Location">Localisation</div><div class="c-val">Paris, Île-de-France</div></div></div>
+        </div>
+      </div>
+      
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="foot-l">© 2026 Aminata Diallo</div>
+  <div class="foot-r">
+    <a href="https://github.com/aminatadiallo1" target="_blank" class="foot-a">GitHub</a>
+    <a href="mailto:aminatadiallopro10@gmail.com" class="foot-a">Email</a>
+  </div>
+</footer>
+
+<script>
+function setLang(l){
+  document.querySelectorAll(".lang-btn").forEach(b=>b.classList.remove("active"));
+  document.querySelector(".lang-btn:"+(l==="fr"?"first":"last")+"-child").classList.add("active");
+  document.querySelectorAll("[data-fr]").forEach(el=>{
+    const txt=el.getAttribute("data-"+l);
+    if(!txt)return;
+    if(txt.includes("<"))el.innerHTML=txt;
+    else el.textContent=txt;
+  });
+}
+
+function toggleTheme(){
+  const html=document.documentElement;
+  const isDark=html.getAttribute("data-theme")==="dark";
+  html.setAttribute("data-theme",isDark?"light":"dark");
+  document.getElementById("themeBtn").textContent=isDark?"🌙":"☀️";
+  localStorage.setItem("theme",isDark?"light":"dark");
+}
+
+// Restore saved theme
+const saved=localStorage.getItem("theme");
+if(saved){
+  document.documentElement.setAttribute("data-theme",saved);
+  document.getElementById("themeBtn").textContent=saved==="dark"?"☀️":"🌙";
+}
+
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add("visible"),i*70);});
+},{threshold:.08});
+document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
