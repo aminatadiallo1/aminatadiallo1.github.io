@@ -1,6 +1,6 @@
 # Bonjour, je suis Aminata Diallo 👋
-Data Scientist · IA Générative · Cybersécurité**  
-Master 1 Cybersécurité & Science des Données — Université Paris 8
+Data Scientist · IA Générative · Cybersécurité 
+Master 1 Cybersécurité & Science des Données - Université Paris 8
 
 🌐 **Portfolio** → [aminatadiallo1.github.io](https://aminatadiallo1.github.io)
 
@@ -36,7 +36,7 @@ Disponible **immédiatement** pour un stage et pour une **alternance de 12 mois*
 | Période | Diplôme | Établissement |
 |---|---|---|
 | 2025 – 2026 | Master 1 · Cybersécurité & Science des Données | Université Paris 8 |
-| 2023 – 2024 | Licence 3 · Mathématiques & Statistiques | Université Paris Cité |
+| 2024 – 2025 | Licence 3 · Mathématiques & Statistiques | Université Paris Cité |
 | 2021 – 2023 | Licence 1 & 2 · Sciences pour l'Ingénieur | UPEC |
 
 ---
@@ -44,7 +44,9 @@ Disponible **immédiatement** pour un stage et pour une **alternance de 12 mois*
 ## Me contacter
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-aminatadiallo1.github.io-black?style=flat&logo=github)](https://aminatadiallo1.github.io)
+
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Aminata_Diallo-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/aminatadiallopro/)
+
 [![Email](https://img.shields.io/badge/Email-contact-EA4335?style=flat&logo=gmail&logoColor=white)](mailto:aminatadiallopro10@gmail.com)
 
 ---
