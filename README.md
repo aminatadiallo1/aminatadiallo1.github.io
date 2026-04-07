@@ -44,9 +44,9 @@ Disponible **immédiatement** pour un stage et pour une **alternance de 12 mois*
 ## Me contacter
 
 [![Portfolio](https://img.shields.io/badge/Portfolio-aminatadiallo1.github.io-black?style=flat&logo=github)](https://aminatadiallo1.github.io)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Aminata_Diallo-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://linkedin.com/in/aminatadiallo)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Aminata_Diallo-0A66C2?style=flat&logo=linkedin&logoColor=white)]([https://www.linkedin.com/in/aminatadiallopro/])
 [![Email](https://img.shields.io/badge/Email-contact-EA4335?style=flat&logo=gmail&logoColor=white)](mailto:aminata.diallo@email.com)
 
 ---
 
-*Ouverte à tout projet autour de l'IA, du Machine Learning ou de la cybersécurité.*
+*Ouverte à tout projet autour de l'IA, du Machine Learning , de la data ou de la cybersécurité.*
